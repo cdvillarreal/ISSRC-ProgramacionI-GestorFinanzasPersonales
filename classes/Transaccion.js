@@ -1,19 +1,20 @@
-
 class Transaccion {
     id;
     tipo;
     descripcion;
     monto;
     categoria;
+    fecha;
 
-    static info = [];
+    static historial = [];
 
-    constructor(id, tipo, descripcion, monto, categoria) {
+    constructor(id, tipo, descripcion, monto, categoria, fecha) {
         this.id = id;
         this.tipo = tipo;
         this.descripcion = descripcion;
-        this.monto;
+        this.monto = monto;
         this.categoria = categoria;
+        this.fecha = fecha;
     }
 }
 

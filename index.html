@@ -8,84 +8,133 @@
     <title>Gestor de Finanzas Personales</title>
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-slate-100 text-gray-800">
     <!-- Header -->
     <header>
-        <div class="bg-white rounded-lg shadow p-3 mb-3 mx-auto">
+        <div class="bg-white shadow p-3 mb-3 mx-auto">
             <h1 class="text-2xl font-bold text-center m-3">Finanzas Personales</h1>
         </div>
     </header>
 
     <!-- Main -->
-    <main class="max-w-5xl mx-auto p-4 center">
+    <main class="max-w-5xl mx-auto p-4">
         <!-- Balance Global -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <!-- Ingresos totales -->
-            <div class="bg-white rounded-lg shadow p-6 max-w-xl mx-auto">Ingresos totales</div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p>Ingresos totales</p>
+                <div id="ingresos-totales" class="text-green-600">$0,00</div>
+            </div>
 
             <!-- Egresos totales -->
-            <div class="bg-white rounded-lg shadow p-6 max-w-xl mx-auto">Egresos totales</div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p>Gastos totales</p>
+                <div id="gastos-totales" class="text-red-600">$0,00</div>
+            </div>
 
             <!-- Balance neto -->
-            <div class="bg-white rounded-lg shadow p-6 max-w-xl mx-auto">Balance neto</div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p>Balance neto</p>
+                <div id="balance-neto">$0,00</div>
+            </div>
         </section>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Formulario -->
-            <section class="bg-white rounded-lg shadow p-6 max-w-xl mx-auto">
-                <form id="form-transaccion" class="grid grid-cols-1 gap-4">
-                    <!-- Descripción -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
-                        <label for="descripcion" class="block text-sm font-medium mb-1">Descripción</label>
-                        <input type="text" id="descripcion" placeholder="Descripción del movimiento" required
-                            class="border rounded px-3 py-2 w-full" />
-                    </div>
 
-                    <!-- Monto -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
-                        <label for="monto" class="block text-sm font-medium mb-1">Monto</label>
-                        <input type="number" id="monto" min="0" step="0.01"
-                            placeholder="Ingrese el monto de la transacción" required
-                            class="border rounded px-3 py-2 w-full" />
-                    </div>
+            <!-- Panel izquierdo-->
+            <div class="flex flex-col gap-6">
+                <!-- Formulario -->
+                <section class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h2 class="text-lg font-semibold mb-4">Nuevo movimiento</h2>
+                    <form id="form-transaccion" class="grid grid-cols-1 gap-4">
+    
+                        <!-- Descripción -->
+                        <div>
+                            <label for="descripcion" class="block text-sm font-medium mb-1">Descripción</label>
+                            <input type="text" id="descripcion" placeholder="Ej.: Comida" required
+                                class="border rounded px-3 py-2 w-full" />
+                        </div>
+    
+                        <!-- Monto -->
+                        <div>
+                            <label for="monto" class="block text-sm font-medium mb-1">Monto</label>
+                            <input type="number" id="monto" min="0" step="0.01"
+                                placeholder="$ 0,00" required
+                                class="border rounded px-3 py-2 w-full" />
+                        </div>
+    
+                        <!-- Tipo -->
+                        <div>
+                            <label for="tipo" class="block text-sm font-medium mb-1">Tipo</label>
+                            <select id="tipo" required class="border rounded px-3 py-2 w-full">
+                                <option value="ingreso">Ingreso</option>
+                                <option value="gasto">Gasto</option>
+                            </select>
+                        </div>
+    
+                        <div class="flex gap-4">
+                            <!-- Categoría -->
+                            <div>
+                                <label for="categoria" class="block text-sm font-medium mb-1">Categoría</label>
+                                <select id="categoria" required class="border rounded px-3 py-2 w-full">
+                                    <option value="sueldo">Sueldo</option>
+                                    <option value="comida">Comida</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="ocio">Ocio</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
 
-                    <!-- Tipo -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
-                        <label for="tipo" class="block text-sm font-medium mb-1">Tipo</label>
-                        <select id="tipo" required class="border rounded px-3 py-2 w-full">
-                            <option value="ingreso">Ingreso</option>
-                            <option value="gasto">Gasto</option>
-                        </select>
-                    </div>
+                            <!-- Fecha -->
+                            <div>
+                                <label for="fecha" class="block text-sm font-medium mb-1">Fecha</label>
+                                <input type="date" id="fecha" required class="border rounded px-3 py-2 w-full">
+                            </div>
+                        </div>
+    
+                        <!-- Botón Agregar -->
+                        <div>
+                            <button type="submit" id="btn-agregar"
+                                class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 w-full">
+                                Agregar movimiento
+                            </button>
+                        </div>
+                    </form>
+                </section>
 
-                    <!-- Categoría -->
-                    <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
-                        <label for="categoria" class="block text-sm font-medium mb-1">Categoría</label>
-                        <select id="categoria" required class="border rounded px-3 py-2 w-full">
-                            <option value="sueldo">Sueldo</option>
-                            <option value="comida">Comida</option>
-                            <option value="transporte">Transporte</option>
-                            <option value="ocio">Ocio</option>
-                            <option value="otros">Otros</option>
-                        </select>
-                    </div>
+                <!-- Resumen por categoría -->
+                <section class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4">Resumen por categoría</h2>
+                    <ul id="itemResumen"></ul>
+                </section>
 
-                    <!-- Botón Agregar -->
-                    <div>
-                        <button type="submit" id="btnAgregar"
-                            class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 w-full">
-                            Agregar movimiento
-                        </button>
-                    </div>
-                </form>
-            </section>
+            </div>
 
             <!-- Historial Financiero -->
-             
+            <section class="lg:col-span-2 bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Historial de movimientos</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-100 text-gray-500">
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                            <th></th>
+                        </thead>
+                        <tbody id="tbody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 gap-4 text-center text-gray-500">
+            Hackaton 2026. ISSRC - Los datos se guardan en el navegador.
         </div>
     </main>
 
     <script type="module" src="./script.js"></script>
 </body>
-
 </html>
