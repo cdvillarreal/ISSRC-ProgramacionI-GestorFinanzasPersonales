@@ -20,6 +20,7 @@ Aplicación SPA para registrar, visualizar y analizar ingresos y gastos diarios.
 |---|---|
 | HTML5 | Estructura de la página |
 | [Tailwind CSS](https://tailwindcss.com/) (vía CDN) | Estilos y diseño responsivo |
+| FontAwesome (vía CDN) | Íconos
 | JavaScript (ES Modules) | Lógica, POO y manipulación del DOM |
 
 No se usan frameworks ni librerías de JavaScript.

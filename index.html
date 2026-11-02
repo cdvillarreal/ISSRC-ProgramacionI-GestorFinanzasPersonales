@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Gestor de Finanzas Personales</title>
 </head>
@@ -12,29 +14,29 @@
     <!-- Header -->
     <header>
         <div class="bg-white shadow p-3 mb-3 mx-auto">
-            <h1 class="text-2xl font-bold text-center m-3">Finanzas Personales</h1>
+            <h1 class="text-3xl font-bold text-center m-3"><i class="fa-solid fa-wallet text-blue-800"></i> Finanzas Personales</h1>
         </div>
     </header>
 
     <!-- Main -->
-    <main class="max-w-5xl mx-auto p-4">
+    <main class="max-w-7xl mx-auto p-4">
         <!-- Balance Global -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <!-- Ingresos totales -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <p>Ingresos totales</p>
-                <div id="ingresos-totales" class="text-green-600">$0,00</div>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-lg font-semibold"><i class="fa-solid fa-arrow-trend-up text-green-600"></i> Ingresos totales</h2>
+                <div id="ingresos-totales" class="text-2xl font-semibold text-green-600">$0,00</div>
             </div>
 
             <!-- Egresos totales -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <p>Gastos totales</p>
-                <div id="gastos-totales" class="text-red-600">$0,00</div>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-lg font-semibold"><i class="fa-solid fa-arrow-trend-down text-red-600"></i> Gastos totales</h2>
+                <div id="gastos-totales" class="text-2xl font-semibold text-red-600">$0,00</div>
             </div>
 
             <!-- Balance neto -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <p>Balance neto</p>
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-lg font-semibold"><i class="fa-solid fa-scale-balanced text-purple-600"></i> Balance neto</h2>
                 <div id="balance-neto">$0,00</div>
             </div>
         </section>
@@ -45,7 +47,7 @@
             <div class="flex flex-col gap-6">
                 <!-- Formulario -->
                 <section class="bg-white rounded-lg shadow p-6 mb-6">
-                    <h2 class="text-lg font-semibold mb-4">Nuevo movimiento</h2>
+                    <h2 class="text-lg font-semibold mb-4"><i class="fa-solid fa-circle-plus"></i> Nuevo movimiento</h2>
                     <form id="form-transaccion" class="grid grid-cols-1 gap-4">
     
                         <!-- Descripción -->
@@ -72,7 +74,7 @@
                             </select>
                         </div>
     
-                        <div class="flex gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             <!-- Categoría -->
                             <div>
                                 <label for="categoria" class="block text-sm font-medium mb-1">Categoría</label>
@@ -112,15 +114,17 @@
 
             <!-- Historial Financiero -->
             <section class="lg:col-span-2 bg-white rounded-lg shadow p-6">
-                <h2 class="text-lg font-semibold mb-4">Historial de movimientos</h2>
+                <h2 class="text-lg font-semibold mb-4"><i class="fa-solid fa-clock-rotate-left"></i> Historial de movimientos</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-100 text-gray-500">
-                            <th>Descripción</th>
-                            <th>Categoría</th>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                            <th></th>
+                            <tr>
+                                <th class="py-2 px-2 text-left">Descripción</th>
+                                <th class="py-2 px-2 text-left">Categoría</th>
+                                <th class="py-2 px-2 text-left">Fecha</th>
+                                <th class="py-2 px-2 text-right">Monto</th>
+                                <th class="py-2 px-2"></th>
+                            </tr>
                         </thead>
                         <tbody id="tbody">
 
