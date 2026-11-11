@@ -27,17 +27,17 @@ const formatearFecha = (f) =>
 const renderizarTabla = () => {
     tbody.innerHTML = Transaccion.historial.map((t) => {
         const esIngreso = t.tipo === "ingreso";
-        const color = esIngreso ? "text-green-600" : "text-red-600";
+        const color = esIngreso ? "text-emerald-600" : "text-rose-600";
         const signo = esIngreso ? "+" : "-";
 
         return `
-            <tr class="border-b">
-                <td class="py-2 px-2">${t.descripcion}</td>
-                <td class="py-2 px-2 capitalize">${t.categoria}</td>
-                <td class="py-2 px-2">${formatearFecha(t.fecha)}</td>
-                <td class="py-2 px-2 text-right font-semibold ${color}">${signo} ${formatearMonto(t.monto)}</td>
-                <td class="py-2 px-2 text-center">
-                    <button data-id="${t.id}" class="text-gray-400 hover:text-red-600" aria-label="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            <tr class="hover:bg-slate-50 transition">
+                <td class="px-6 py-3 font-medium text-slate-700">${t.descripcion}</td>
+                <td class="px-3 py-3 capitalize text-slate-500">${t.categoria}</td>
+                <td class="px-3 py-3 text-slate-500">${formatearFecha(t.fecha)}</td>
+                <td class="px-3 py-3 text-right font-semibold whitespace-nowrap ${color}">${signo} ${formatearMonto(t.monto)}</td>
+                <td class="px-6 py-3 text-center">
+                    <button data-id="${t.id}" class="text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg p-2 transition" aria-label="Eliminar"><i class="fa-solid fa-trash"></i></button>
                 </td>
             </tr>`;
     }).join("");
@@ -56,7 +56,7 @@ const calcularBalance = () => {
     ingresosTotales.textContent = formatearMonto(ingresos);
     gastosTotales.textContent = formatearMonto(gastos);
     balanceNeto.textContent = formatearMonto(neto);
-    balanceNeto.className = neto >= 0 ? "text-2xl font-semibold text-green-600" : "text-2xl font-semibold text-red-600";
+    balanceNeto.className = `text-2xl font-bold truncate ${neto >= 0 ? "text-slate-800" : "text-rose-600"}`;
 };
 
 // Renderizar Resumen
@@ -69,9 +69,9 @@ const renderizarResumen = () => {
     });
 
     itemResumen.innerHTML = Object.entries(porCategoria).map(([categoria, monto]) => `
-        <li class="flex justify-between py-1 border-b">
-            <span class="capitalize">${categoria}</span>
-            <span class="font-semibold ${monto >= 0 ? "text-green-600" : "text-red-600"}">${formatearMonto(monto)}</span>
+        <li class="flex items-center justify-between text-sm">
+            <span class="capitalize text-slate-600">${categoria}</span>
+            <span class="font-semibold ${monto >= 0 ? "text-emerald-600" : "text-rose-600"}">${formatearMonto(monto)}</span>
         </li>`).join("");
 };
 
