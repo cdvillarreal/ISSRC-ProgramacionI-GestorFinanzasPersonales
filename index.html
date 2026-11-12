@@ -10,15 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-        @theme {
-            --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <title>Gestor de Finanzas Personales</title>
 </head>
 
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen antialiased">
+<body class="bg-slate-50 text-slate-800 min-h-screen antialiased font-[Inter,ui-sans-serif,system-ui,sans-serif]">
     <!-- Header -->
     <header class="bg-white border-b border-slate-200">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-3">
@@ -112,11 +108,6 @@
                                 <label for="categoria" class="block text-sm font-medium text-slate-600 mb-1.5">Categoría</label>
                                 <select id="categoria" required
                                     class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option value="sueldo">Sueldo</option>
-                                    <option value="comida">Comida</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="ocio">Ocio</option>
-                                    <option value="otros">Otros</option>
                                 </select>
                             </div>
 
@@ -128,10 +119,27 @@
                             </div>
                         </div>
 
-                        <!-- Botón Agregar -->
+                        <!-- Nueva categoría -->
+                        <div>
+                            <label for="nueva-categoria" class="block text-sm font-medium text-slate-600 mb-1.5">Agregar categoría <span id="tipo-categoria" class="text-slate-400 font-normal"></span></label>
+                            <div class="flex gap-2">
+                                <input type="text" id="nueva-categoria" maxlength="30" placeholder="Ej.: Salud"
+                                    class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                                <button type="button" id="btn-categoria" aria-label="Agregar categoría"
+                                    class="rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-4 text-sm font-medium transition">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
                         <button type="submit" id="btn-agregar"
                             class="w-full flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[.99] text-white font-medium py-2.5 text-sm shadow-sm transition">
-                            <i class="fa-solid fa-check"></i> Agregar movimiento
+                            <i class="fa-solid fa-check"></i> <span id="texto-btn-agregar">Agregar movimiento</span>
+                        </button>
+                        <button type="button" id="btn-cancelar" hidden
+                            class="w-full rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-600 font-medium py-2.5 text-sm transition">
+                            Cancelar edición
                         </button>
                     </form>
                 </section>
@@ -142,7 +150,9 @@
                         <i class="fa-solid fa-chart-pie text-indigo-600"></i>
                         Resumen por categoría
                     </h2>
-                    <ul id="itemResumen" class="space-y-3"></ul>
+                    <div class="relative h-64">
+                        <canvas id="grafico-categorias" aria-label="Gráfico de barras por categoría" role="img"></canvas>
+                    </div>
                 </section>
 
             </div>
@@ -173,11 +183,45 @@
                 </div>
             </section>
         </div>
+
+        <!-- Evolución temporal -->
+        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <h2 class="font-semibold text-base flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-chart-line text-indigo-600"></i>
+                Evolución en el tiempo
+            </h2>
+            <div class="relative h-80">
+                <canvas id="grafico-evolucion" aria-label="Gráfico de líneas: ingresos, gastos y balance neto" role="img"></canvas>
+            </div>
+        </section>
     </main>
 
     <footer class="text-center text-xs text-slate-400 py-8">
-        Hackaton 2026 · ISSRC — Los datos se guardan en el navegador.
+        Hackaton 2027 · ISSRC — Los datos se guardan en el navegador.
     </footer>
+
+    <!-- Modal de confirmación para eliminar -->
+    <dialog id="modal-eliminar" class="m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl bg-white p-6 text-slate-800 shadow-xl backdrop:bg-slate-900/50">
+        <div class="flex items-start gap-4">
+            <div class="h-10 w-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="min-w-0">
+                <h2 class="font-semibold text-base">Eliminar movimiento</h2>
+                <p class="text-sm text-slate-500 mt-1">¿Seguro que querés eliminar <span id="modal-descripcion" class="font-medium text-slate-700 break-words"></span>? Esta acción no se puede deshacer.</p>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end gap-2">
+            <button type="button" id="modal-cancelar"
+                class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-600 font-medium px-4 py-2 text-sm transition">
+                Cancelar
+            </button>
+            <button type="button" id="modal-confirmar"
+                class="rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-medium px-4 py-2 text-sm shadow-sm transition">
+                Eliminar
+            </button>
+        </div>
+    </dialog>
 
     <script type="module" src="./script.js"></script>
 </body>
