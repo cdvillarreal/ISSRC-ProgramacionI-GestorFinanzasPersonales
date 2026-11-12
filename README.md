@@ -40,4 +40,4 @@ FinanzasPersonales/
 
 ## Alumno
 
-**Daniel Villarreal** - Tecnicatura, ISSRC, 2026.
+**Daniel Villarreal** - Tecnicatura, ISSRC, 2027.
