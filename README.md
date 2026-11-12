@@ -2,7 +2,7 @@
 
 Aplicación SPA para registrar, visualizar y analizar ingresos y gastos diarios. Desarrollada con **HTML5**, **Tailwind CSS** y **JavaScript (Vanilla)** aplicando Programación Orientada a Objetos.
 
-> Proyecto del **Hackaton Frontend 2026** — Instituto Superior Santa Rosa de Calamuchita (ISSRC), Programación I, 1er año.
+> Proyecto del **Hackaton Frontend 2027** — Instituto Superior Santa Rosa de Calamuchita (ISSRC), Programación I, 1er año.
 
 ## Funcionalidades
 
